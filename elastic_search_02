@@ -1,0 +1,123 @@
+# create index (p.65)
+PUT movie_search_1
+{
+  "settings": {
+    "number_of_shards": 5,
+    "number_of_replicas": 1
+  },
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "movieCd": {
+          "type": "keyword"
+        },
+        "movieNm": { 
+          "type" : "text",
+          "analyzer": "standard"
+          
+        },
+        "movieNmEn": { 
+          "type" : "text",
+          "analyzer": "standard"
+        },
+        "prdtYear": { 
+          "type" : "integer"
+        },
+        "openDt": { 
+          "type" : "date" 
+        },
+        "typeNm": { 
+          "type" : "keyword"
+        },
+        "prdtStatNm": { 
+          "type" : "keyword"
+        },
+        "nationAlt": { 
+          "type" : "keyword" },
+        "genreAlt": { "type" : "keyword"
+        },
+        "repNationNm": { 
+          "type" : "keyword"
+        },
+        "repGenreNm": { 
+          "type" : "keyword"
+        },
+        "companies": {
+          "properties": {
+            "companyCd": {
+              "type": "keyword"
+            },
+            "companyNm": {
+              "type": "keyword"
+            }
+          }
+        },
+        "directors": {
+          "properties": {
+            "peopleNm": {
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+GET movie_search_1/_mapping
+
+# (p.77)
+POST movie_search/_search
+{
+  "size": 0,
+  "aggs": {
+    "indices": {
+      "terms": {
+        "field": "_index",
+        "size": 10
+      }
+    }
+  }
+}
+
+# _type meta-field (p.78)
+POST movie_search/_search
+{
+  "size": 0,
+  "aggs": {
+    "indices": {
+      "terms": {
+        "field": "_type",
+        "size": 10
+      }
+    }
+  }
+}
+
+# _id meta-field (p.79)
+POST movie_search/_search
+{
+  "size": 0,
+  "aggs": {
+    "indices": {
+      "terms": {
+        "field": "_id",
+        "size": 10
+      }
+    }
+  }
+}
+
+# _uid meta-field (p.80)
+POST movie_search/_search
+{
+  "size": 0,
+  "aggs": {
+    "indices": {
+      "terms": {
+        "field": "_uid",
+        "size": 10
+      }
+    }
+  }
+}
